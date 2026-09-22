@@ -1,0 +1,15 @@
+{
+  "artifactOrigins": [
+    "https://plugins.genex.games"
+  ],
+  "official": {
+    "genex": {
+      "publisher": "Genex",
+      "repo": "Rabneba/ai-game-studio"
+    },
+    "blender": {
+      "publisher": "Studio",
+      "repo": "Rabneba/ai-game-studio"
+    }
+  }
+}

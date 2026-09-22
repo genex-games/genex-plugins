@@ -1,0 +1,24 @@
+{
+  "id": "blender",
+  "name": "Local Blender",
+  "publisher": "Studio",
+  "description": "Optional local 3D modeling, GLB export and reference renders. Runs installed Blender through the public managed-runtime SDK. No account or cloud fallback.",
+  "category": "assets",
+  "tier": "official",
+  "repo": "Rabneba/ai-game-studio",
+  "sha": "2bfd949db7275886b1060005b168675349910c2f",
+  "version": "1.1.0",
+  "capabilities": [
+    "native-runtime",
+    "project.read",
+    "project.write",
+    "jobs",
+    "observe"
+  ],
+  "artifact": {
+    "url": "https://plugins.genex.games/releases/blender/1.1.0/856a7008806192d1bcab2474bafc5f4a8718aa61ffbb7fe394b6cf17462f886d.json",
+    "sha256": "856a7008806192d1bcab2474bafc5f4a8718aa61ffbb7fe394b6cf17462f886d"
+  },
+  "subdir": "src/plugins/blender",
+  "minStudioVersion": "0.1.0"
+}
