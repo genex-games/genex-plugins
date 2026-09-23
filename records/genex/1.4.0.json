@@ -1,0 +1,26 @@
+{
+  "id": "genex",
+  "name": "Genex Tools",
+  "publisher": "Genex",
+  "description": "Optional asset generation using Genex credits. Coding uses your selected provider.",
+  "category": "assets",
+  "tier": "official",
+  "repo": "Rabneba/ai-game-studio",
+  "sha": "711d977814b3a25a2e41522770000bacc7eb7650",
+  "version": "1.4.0",
+  "capabilities": [
+    "credentials",
+    "observe",
+    "jobs",
+    "network",
+    "external-auth",
+    "project.write",
+    "export"
+  ],
+  "artifact": {
+    "url": "https://plugins.genex.games/releases/genex/1.4.0/41a105df6ab5d082f921ed33bf62a63f568c618c70fea40ccc2bff5bfcd256ea.json",
+    "sha256": "41a105df6ab5d082f921ed33bf62a63f568c618c70fea40ccc2bff5bfcd256ea"
+  },
+  "subdir": "src/plugins/genex",
+  "minStudioVersion": "0.1.0"
+}
