@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-23T04:15:15.548Z",
+  "updatedAt": "2026-09-23T12:06:13.012Z",
   "plugins": [
     {
       "id": "genex",
@@ -10,8 +10,8 @@
       "category": "assets",
       "tier": "official",
       "repo": "Rabneba/ai-game-studio",
-      "sha": "711d977814b3a25a2e41522770000bacc7eb7650",
-      "version": "1.4.0",
+      "sha": "cb780c5174971443e0bb3ceadca779e9472e9e79",
+      "version": "1.4.2",
       "capabilities": [
         "credentials",
         "observe",
@@ -22,8 +22,8 @@
         "export"
       ],
       "artifact": {
-        "url": "https://plugins.genex.games/releases/genex/1.4.0/41a105df6ab5d082f921ed33bf62a63f568c618c70fea40ccc2bff5bfcd256ea.json",
-        "sha256": "41a105df6ab5d082f921ed33bf62a63f568c618c70fea40ccc2bff5bfcd256ea"
+        "url": "https://plugins.genex.games/releases/genex/1.4.2/cbcb117986efebf6f5d45d76f7fa25f3d7e75bf545bcdf2df7230512cb2d9fd4.json",
+        "sha256": "cbcb117986efebf6f5d45d76f7fa25f3d7e75bf545bcdf2df7230512cb2d9fd4"
       },
       "subdir": "src/plugins/genex",
       "minStudioVersion": "0.1.0"
