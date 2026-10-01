@@ -38,6 +38,28 @@ in pull-request CI. The catalog checker does not execute plugin code.
    Refresh action from a clean profile. A failed upload does not authorize changing package
    versions or regenerating assets. Retry only the same reviewed payload after reconciliation.
 
+## Community submissions
+
+A submitter's pull request adds `records/<id>/<version>.json` and its `index.json` entry (written
+by Studio's `npm run plugin:submit`) and links the artifact attached to their source repository's
+release. CI's "Metadata and history" step must pass; "Artifacts published" fails until step 5.
+
+1. In a checkout of the pull request, stage the asset:
+   `node scripts/stage-artifact.mjs --root . --record records/<id>/<version>.json --from <asset URL> --out /absolute/path/to/uploads`.
+   It refuses bytes that do not match the record's digest or envelope, and runs nothing.
+2. In a Studio checkout, `npm run plugin:unpack -- <staged file> <new directory>`, then compare it
+   with the record's `repo` (and `subdir`) at its `sha`. Only authoring files (`AGENTS.md`,
+   `jsconfig.json`, `plugin-sdk/`, dotfiles) may be missing; every shipped file must be
+   explainable from that source.
+3. In an isolated environment without maintainer credentials, run `npm run plugin:doctor` on the
+   unpacked folder (it executes the backend) and load it in an owned Studio development profile.
+   Check the capabilities, network hosts and evidence against the pull request.
+4. Check the release identity is new: a new id, or a higher version from the same publisher,
+   repository and subdirectory. The validator enforces this; ownership transfers are separate.
+5. Upload the staged object as in step 4 above, then re-run the pull request's checks until
+   "Artifacts published" passes.
+6. Approve and merge, then publish the index (steps 7 and 8 above).
+
 Repository roles: `@vanyathecyborg` owns review. Require one approving review and the `validate`
 status check on main before accepting community submissions. Setup of those repository rules
 must be verified in GitHub; CODEOWNERS alone does not enforce them.
