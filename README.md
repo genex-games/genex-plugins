@@ -1,12 +1,19 @@
 # Studio curated plugin catalog
 
 This repository lists reviewed releases. It does not host games or require a Genex account.
+Anyone can submit a plugin release: see [CONTRIBUTING.md](CONTRIBUTING.md) and the
+[plugin guide](https://github.com/genex-games/genex-desktop/blob/dev/docs/PLUGIN_GUIDE.md).
+Maintainers review every submission before it is listed.
 
 - `index.json`: current discoverable releases.
 - `records/<id>/<version>.json`: immutable release identity, retained after withdrawal.
 - `policy.json`: maintainer-owned artifact origins and reserved official identities.
 - `scripts/check-catalog.mjs`: dependency-free static release gate.
-- `.github/workflows/catalog.yml`: PR validation against the base branch's validator and policy.
+- `scripts/stage-artifact.mjs`: maintainer step that fetches a submitter's release asset and
+  stages it for upload only if it matches its record.
+- `.github/workflows/catalog.yml`: PR validation against the base branch's validator and policy:
+  the submitter's record first, then whether its artifact has been published.
+- `.github/pull_request_template.md`: what a submission states and shows.
 
 Artifacts live on the approved public HTTPS origin, at `<id>/<version>/<sha256>.json`.
 They are prebuilt base64 JSON envelopes, never npm installs or extraction hooks. Upload
@@ -23,9 +30,8 @@ The R2 bucket is `studio-plugin-releases`. Downloads require no account.
 
 This repository's catalog tooling and documentation are MIT licensed. Package dependencies
 retain their own licenses. This catalog license does not relicense Studio or the hosted
-plugin artifacts. Official package source pointers currently identify exact commits in the
-private Studio repository; they are maintainer provenance, not publicly browsable source.
-Installers use the public, digest-checked artifacts and need no private GitHub access.
+plugin artifacts. Each record pins its plugin's source repository and commit for provenance.
+Installers use the public, digest-checked artifacts and need no GitHub access.
 
 ## Maintainer bootstrap
 

@@ -45,7 +45,8 @@ function entryCheck(e,policy){
   if(official&&(e.tier!=='official'||e.publisher!==official.publisher||e.repo!==official.repo))fail(`Reserved official identity: ${e.id}`);
   if(e.tier==='official'&&!official)fail(`Official identity not approved: ${e.id}`);
 }
-async function checkArtifact(e,bytes){
+/** Check one release's envelope bytes against its record: digest, size, safe paths and the manifest's identity. */
+export async function checkArtifact(e,bytes){
   if(bytes.length>256*1024*1024||createHash('sha256').update(bytes).digest('hex')!==e.artifact.sha256)fail(`Artifact digest/size mismatch: ${e.id}`);
   const files=JSON.parse(bytes);if(!object(files)||!Object.hasOwn(files,'plugin.json'))fail('Invalid envelope');
   const decoded=new Map();
@@ -58,7 +59,12 @@ async function checkArtifact(e,bytes){
   return {id:e.id,version:e.version,files:decoded.size,bytes:bytes.length};
 }
 /** @param {{root:string, previous?:string, policyRoot?:string, artifacts?:string, remote?:boolean}} options */
-export async function checkCatalog({root,previous=undefined,policyRoot=root,artifacts=undefined,remote=false}){
+/**
+ * `allowPendingNew` (with `remote` and `previous`): a release that is new since `previous` and whose
+ * artifact the host answers 404 for is reported in `pending` rather than failed, because a maintainer
+ * uploads a reviewed community artifact only after review. A released artifact is never pending.
+ */
+export async function checkCatalog({root,previous=undefined,policyRoot=root,artifacts=undefined,remote=false,allowPendingNew=false,fetch:download=globalThis.fetch}){
   const policy=JSON.parse(await read(policyRoot,'policy.json'));
   if(!Array.isArray(policy.artifactOrigins)||!object(policy.official))fail('Invalid maintainer policy');
   const index=JSON.parse(await read(root,'index.json'));
@@ -74,24 +80,27 @@ export async function checkCatalog({root,previous=undefined,policyRoot=root,arti
   for(const e of index.plugins){entryCheck(e,policy);if(ids.has(e.id))fail('Duplicate plugin id');ids.add(e.id);
     if(!same(all.get(`records/${e.id}/${e.version}.json`),e))fail(`Missing/mismatched immutable record: ${e.id}`);}
   // Compare every historical record, including withdrawn entries, so identities cannot be recycled.
-  if(previous){const old=await records(previous);for(const [key,e]of old){if(!same(all.get(key),e))fail(`Released record changed or removed: ${key}`);}
+  const old=previous?await records(previous):new Map();
+  if(previous){for(const [key,e]of old){if(!same(all.get(key),e))fail(`Released record changed or removed: ${key}`);}
     for(const e of all.values())for(const p of old.values())if(e.id===p.id){
       if(e.publisher!==p.publisher||e.repo!==p.repo||(e.subdir??'')!==(p.subdir??'')||e.tier!==p.tier)fail(`Publisher/source ownership changed: ${e.id}`);
       if(!old.has(`records/${e.id}/${e.version}.json`)&&!newer(e.version,p.version))fail(`New release must have a higher version: ${e.id}`);
     }
   }
   for(const e of index.plugins)for(const p of all.values())if(e.id===p.id&&newer(p.version,e.version))fail(`Index cannot downgrade ${e.id}; publish a corrective patch`);
-  const verified=[];
-  for(const e of all.values()){let bytes;
+  const verified=[],pending=[];
+  for(const [key,e]of all){let bytes;
     if(artifacts)bytes=await read(artifacts,`${e.id}/${e.version}/${e.artifact.sha256}.json`,256*1024*1024);
-    else if(remote){const res=await fetch(e.artifact.url,{redirect:'error',signal:AbortSignal.timeout(300000)});if(!res.ok)fail(`Artifact HTTP ${res.status}`);
+    else if(remote){const res=await download(e.artifact.url,{redirect:'error',signal:AbortSignal.timeout(300000)});
+      if(res.status===404&&allowPendingNew&&previous&&!old.has(key)){pending.push({id:e.id,version:e.version,url:e.artifact.url});continue;}
+      if(!res.ok)fail(`Artifact HTTP ${res.status}`);
       const chunks=[];let size=0;for await(const chunk of res.body){size+=chunk.length;if(size>256*1024*1024){fail('Artifact too large');}chunks.push(chunk);}bytes=Buffer.concat(chunks);}
     if(bytes)verified.push(await checkArtifact(e,bytes));
   }
-  return {ok:true,entries:index.plugins.length,records:all.size,artifactsVerified:verified,limitation:'Static release gate only; does not execute code, certify safety, or prove public installation.'};
+  return {ok:true,entries:index.plugins.length,records:all.size,artifactsVerified:verified,pending,limitation:'Static release gate only; does not execute code, certify safety, or prove public installation.'};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
-  try{const args=process.argv.slice(2);const value=key=>{const i=args.indexOf(key);return i<0?undefined:args[i+1];};const root=value('--root');if(!root)fail('Usage: node scripts/check-catalog.mjs --root DIR [--previous BASE] [--policy-root BASE] [--artifacts DIR | --remote]');
-    console.log(JSON.stringify(await checkCatalog({root,previous:value('--previous'),policyRoot:value('--policy-root')??root,artifacts:value('--artifacts'),remote:args.includes('--remote')}),null,2));
+  try{const args=process.argv.slice(2);const value=key=>{const i=args.indexOf(key);return i<0?undefined:args[i+1];};const root=value('--root');if(!root)fail('Usage: node scripts/check-catalog.mjs --root DIR [--previous BASE] [--policy-root BASE] [--artifacts DIR | --remote [--allow-pending-new]]');
+    console.log(JSON.stringify(await checkCatalog({root,previous:value('--previous'),policyRoot:value('--policy-root')??root,artifacts:value('--artifacts'),remote:args.includes('--remote'),allowPendingNew:args.includes('--allow-pending-new')}),null,2));
   }catch(e){console.error(e.message);process.exitCode=1;}
 }
