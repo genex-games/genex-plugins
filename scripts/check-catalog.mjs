@@ -74,11 +74,11 @@ export async function checkArtifact(e,bytes){
   if(m.backend){relative(m.backend);if(!decoded.has(m.backend))fail('Missing backend');}
   return {id:e.id,version:e.version,files:decoded.size,bytes:bytes.length};
 }
-/** @param {{root:string, previous?:string, policyRoot?:string, artifacts?:string, remote?:boolean}} options */
 /**
  * `allowPendingNew` (with `remote` and `previous`): a release that is new since `previous` and whose
  * artifact the host answers 404 for is reported in `pending` rather than failed, because a maintainer
  * uploads a reviewed community artifact only after review. A released artifact is never pending.
+ * @param {{root:string, previous?:string, policyRoot?:string, artifacts?:string, remote?:boolean, allowPendingNew?:boolean, fetch?:typeof globalThis.fetch}} options
  */
 export async function checkCatalog({root,previous=undefined,policyRoot=root,artifacts=undefined,remote=false,allowPendingNew=false,fetch:download=globalThis.fetch}){
   const policy=JSON.parse(await read(policyRoot,'policy.json'));
