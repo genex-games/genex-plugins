@@ -14,6 +14,7 @@ const stable = x => Array.isArray(x) ? x.map(stable) : object(x) ? Object.fromEn
 const same = (a,b) => equal(stable(a),stable(b));
 const newer = (a,b) => { const x=a.split('.').map(BigInt),y=b.split('.').map(BigInt); for(let i=0;i<3;i++)if(x[i]!==y[i])return x[i]>y[i];return false; };
 const relative = name => { if(typeof name!=='string'||!name||name.includes('\\')||name.includes(':')||name.includes('\0')||name.split('/').some(x=>!x||x==='.'||x==='..'))fail(`Unsafe package path: ${name}`);return name; };
+const repoName = /^[-\w.]+\/[-\w.]+$/;
 const https = value => { const u=new URL(value);if(u.protocol!=='https:'||u.username||u.password||u.hash)fail('Expected credential-free HTTPS URL');return u; };
 const read = async (root,name,cap=1024*1024) => {
   relative(name);let current=root;
@@ -31,7 +32,7 @@ async function records(root){
 function entryCheck(e,policy){
   if(!object(e)||!/^[a-z][a-z0-9-]{0,47}$/.test(e.id))fail('Invalid plugin id');
   for(const field of ['name','publisher','description'])if(typeof e[field]!=='string'||!e[field].trim())fail(`Missing ${field}: ${e.id}`);
-  if(!version.test(e.version)||!sha.test(e.sha)||!/^[-\w.]+\/[-\w.]+$/.test(e.repo))fail(`Invalid release identity: ${e.id}`);
+  if(!version.test(e.version)||!sha.test(e.sha)||!repoName.test(e.repo))fail(`Invalid release identity: ${e.id}`);
   if(!['assets','publishing','tools','analytics','other'].includes(e.category)||!['official','community'].includes(e.tier))fail(`Invalid classification: ${e.id}`);
   if(!Array.isArray(e.capabilities)||e.capabilities.some(c=>typeof c!=='string')||new Set(e.capabilities).size!==e.capabilities.length)fail(`Invalid capabilities: ${e.id}`);
   if(e.subdir!==undefined)relative(e.subdir);
@@ -41,9 +42,24 @@ function entryCheck(e,policy){
   const url=https(e.artifact.url);
   if(!policy.artifactOrigins.includes(url.origin))fail(`Unapproved artifact origin: ${url.origin}`);
   if(!url.pathname.endsWith(`/${e.id}/${e.version}/${e.artifact.sha256}.json`)||url.search)fail('Artifact URL must contain immutable id/version/digest path');
-  const official=policy.official?.[e.id];
-  if(official&&(e.tier!=='official'||e.publisher!==official.publisher||e.repo!==official.repo))fail(`Reserved official identity: ${e.id}`);
+  const official=officialFor(policy,e.id);
+  if(official&&(e.tier!=='official'||e.publisher!==official.publisher||!official.repos.includes(e.repo)))fail(`Reserved official identity: ${e.id}`);
   if(e.tier==='official'&&!official)fail(`Official identity not approved: ${e.id}`);
+  // An official repository hosts only its official ids: no other id may borrow its provenance.
+  if(!official&&Object.values(policy.official).some(o=>o.repos.includes(e.repo)))fail(`Official source reserved: ${e.id}`);
+}
+/** The reservation for an official id: its publisher and its repositories, current first. */
+const officialFor = (policy,id) => Object.hasOwn(policy.official,id)?policy.official[id]:undefined;
+/**
+ * The repository a record's identity names. An official id's repositories (current first, then
+ * where it used to live) are one source, so moving the source keeps its identity and history.
+ */
+const sourceRepo = (policy,e) => { const official=officialFor(policy,e.id);return official?.repos.includes(e.repo)?official.repos[0]:e.repo; };
+/** One shape: `official[id] = {publisher, repos: [current, ...legacy]}`; the old single `repo` is refused. */
+function policyCheck(policy){
+  if(!Array.isArray(policy.artifactOrigins)||!object(policy.official))fail('Invalid maintainer policy');
+  for(const o of Object.values(policy.official))
+    if(!object(o)||typeof o.publisher!=='string'||!o.publisher||!Array.isArray(o.repos)||!o.repos.length||o.repos.some(r=>typeof r!=='string'||!repoName.test(r))||new Set(o.repos).size!==o.repos.length||Object.hasOwn(o,'repo'))fail('Invalid maintainer policy');
 }
 /** Check one release's envelope bytes against its record: digest, size, safe paths and the manifest's identity. */
 export async function checkArtifact(e,bytes){
@@ -66,14 +82,14 @@ export async function checkArtifact(e,bytes){
  */
 export async function checkCatalog({root,previous=undefined,policyRoot=root,artifacts=undefined,remote=false,allowPendingNew=false,fetch:download=globalThis.fetch}){
   const policy=JSON.parse(await read(policyRoot,'policy.json'));
-  if(!Array.isArray(policy.artifactOrigins)||!object(policy.official))fail('Invalid maintainer policy');
+  policyCheck(policy);
   const index=JSON.parse(await read(root,'index.json'));
   if(index.version!==1||!Array.isArray(index.plugins)||!Number.isFinite(Date.parse(index.updatedAt)))fail('Invalid index');
   const all=await records(root),ids=new Set();
   for(const e of all.values())entryCheck(e,policy);
   const owners=new Map();
   for(const e of all.values()){
-    const identity={publisher:e.publisher,repo:e.repo,subdir:e.subdir??'',tier:e.tier};
+    const identity={publisher:e.publisher,repo:sourceRepo(policy,e),subdir:e.subdir??'',tier:e.tier};
     if(owners.has(e.id)&&!same(owners.get(e.id),identity))fail(`Publisher/source ownership changed: ${e.id}`);
     owners.set(e.id,identity);
   }
@@ -83,9 +99,11 @@ export async function checkCatalog({root,previous=undefined,policyRoot=root,arti
   const old=previous?await records(previous):new Map();
   if(previous){for(const [key,e]of old){if(!same(all.get(key),e))fail(`Released record changed or removed: ${key}`);}
     for(const e of all.values())for(const p of old.values())if(e.id===p.id){
-      if(e.publisher!==p.publisher||e.repo!==p.repo||(e.subdir??'')!==(p.subdir??'')||e.tier!==p.tier)fail(`Publisher/source ownership changed: ${e.id}`);
+      if(e.publisher!==p.publisher||sourceRepo(policy,e)!==sourceRepo(policy,p)||(e.subdir??'')!==(p.subdir??'')||e.tier!==p.tier)fail(`Publisher/source ownership changed: ${e.id}`);
       if(!old.has(`records/${e.id}/${e.version}.json`)&&!newer(e.version,p.version))fail(`New release must have a higher version: ${e.id}`);
     }
+    // Legacy repositories are only for records already released; a new release names the current one.
+    for(const [key,e]of all){const official=officialFor(policy,e.id);if(official&&!old.has(key)&&e.repo!==official.repos[0])fail(`Official release must name ${official.repos[0]}: ${e.id}`);}
   }
   for(const e of index.plugins)for(const p of all.values())if(e.id===p.id&&newer(p.version,e.version))fail(`Index cannot downgrade ${e.id}; publish a corrective patch`);
   const verified=[],pending=[];

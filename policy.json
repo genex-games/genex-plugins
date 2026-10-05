@@ -5,11 +5,17 @@
   "official": {
     "genex": {
       "publisher": "Genex",
-      "repo": "Rabneba/ai-game-studio"
+      "repos": [
+        "genex-games/genex-desktop",
+        "Rabneba/ai-game-studio"
+      ]
     },
     "blender": {
       "publisher": "Studio",
-      "repo": "Rabneba/ai-game-studio"
+      "repos": [
+        "genex-games/genex-desktop",
+        "Rabneba/ai-game-studio"
+      ]
     }
   }
 }
