@@ -1,0 +1,26 @@
+{
+  "id": "genex",
+  "name": "Genex Tools",
+  "publisher": "Genex",
+  "description": "3D models, characters, sound and art for your games, made in chat with Genex credits. Coding stays on your own provider.",
+  "category": "assets",
+  "tier": "official",
+  "repo": "genex-games/genex-desktop",
+  "sha": "ab09b9bd8b6e9db00516bede747d6b395ba3757c",
+  "version": "1.5.0",
+  "capabilities": [
+    "credentials",
+    "observe",
+    "jobs",
+    "network",
+    "external-auth",
+    "project.write",
+    "export"
+  ],
+  "artifact": {
+    "url": "https://plugins.genex.games/releases/genex/1.5.0/42044189f746a6bd4764511cc44b1d627ed02d49f70d2723b03bbbe9ff27633b.json",
+    "sha256": "42044189f746a6bd4764511cc44b1d627ed02d49f70d2723b03bbbe9ff27633b"
+  },
+  "subdir": "src/plugins/genex",
+  "minStudioVersion": "0.1.0"
+}

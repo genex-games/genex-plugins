@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-23T04:15:15.548Z",
+  "updatedAt": "2026-10-05T13:52:38.184Z",
   "plugins": [
     {
       "id": "genex",
       "name": "Genex Tools",
       "publisher": "Genex",
-      "description": "Optional asset generation using Genex credits. Coding uses your selected provider.",
+      "description": "3D models, characters, sound and art for your games, made in chat with Genex credits. Coding stays on your own provider.",
       "category": "assets",
       "tier": "official",
-      "repo": "Rabneba/ai-game-studio",
-      "sha": "711d977814b3a25a2e41522770000bacc7eb7650",
-      "version": "1.4.0",
+      "repo": "genex-games/genex-desktop",
+      "sha": "ab09b9bd8b6e9db00516bede747d6b395ba3757c",
+      "version": "1.5.0",
       "capabilities": [
         "credentials",
         "observe",
@@ -22,8 +22,8 @@
         "export"
       ],
       "artifact": {
-        "url": "https://plugins.genex.games/releases/genex/1.4.0/41a105df6ab5d082f921ed33bf62a63f568c618c70fea40ccc2bff5bfcd256ea.json",
-        "sha256": "41a105df6ab5d082f921ed33bf62a63f568c618c70fea40ccc2bff5bfcd256ea"
+        "url": "https://plugins.genex.games/releases/genex/1.5.0/42044189f746a6bd4764511cc44b1d627ed02d49f70d2723b03bbbe9ff27633b.json",
+        "sha256": "42044189f746a6bd4764511cc44b1d627ed02d49f70d2723b03bbbe9ff27633b"
       },
       "subdir": "src/plugins/genex",
       "minStudioVersion": "0.1.0"
