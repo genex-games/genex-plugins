@@ -106,7 +106,7 @@ for (const [what, fields] of impostors)
   });
 
 test("a non-official id cannot claim an official repository", async () => {
-  for (const repo of [CURRENT, LEGACY])
+  for (const repo of [CURRENT, LEGACY, CURRENT.toUpperCase()])
     await assert.rejects(
       check([release("genex-tools", "1.0.0", { repo, publisher: "Genex" })]),
       /Official source reserved: genex-tools/,

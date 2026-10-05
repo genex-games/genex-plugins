@@ -46,7 +46,7 @@ function entryCheck(e,policy){
   if(official&&(e.tier!=='official'||e.publisher!==official.publisher||!official.repos.includes(e.repo)))fail(`Reserved official identity: ${e.id}`);
   if(e.tier==='official'&&!official)fail(`Official identity not approved: ${e.id}`);
   // An official repository hosts only its official ids: no other id may borrow its provenance.
-  if(!official&&Object.values(policy.official).some(o=>o.repos.includes(e.repo)))fail(`Official source reserved: ${e.id}`);
+  if(!official&&Object.values(policy.official).some(o=>o.repos.some(r=>r.toLowerCase()===e.repo.toLowerCase())))fail(`Official source reserved: ${e.id}`);
 }
 /** The reservation for an official id: its publisher and its repositories, current first. */
 const officialFor = (policy,id) => Object.hasOwn(policy.official,id)?policy.official[id]:undefined;
