@@ -1,0 +1,24 @@
+{
+  "id": "blender",
+  "name": "Local Blender",
+  "publisher": "Studio",
+  "description": "Model 3D assets with Blender on this Mac. No account or credits.",
+  "category": "assets",
+  "tier": "official",
+  "repo": "genex-games/genex-desktop",
+  "sha": "3214e305a42336a5e6b7e4495e6de430eafccef3",
+  "version": "1.1.1",
+  "capabilities": [
+    "native-runtime",
+    "project.read",
+    "project.write",
+    "jobs",
+    "observe"
+  ],
+  "artifact": {
+    "url": "https://plugins.genex.games/releases/blender/1.1.1/0a3c3c343e435015a5530ea2ab7623769b7077935f368dfde54376f8b42c941a.json",
+    "sha256": "0a3c3c343e435015a5530ea2ab7623769b7077935f368dfde54376f8b42c941a"
+  },
+  "subdir": "src/plugins/blender",
+  "minStudioVersion": "0.1.0"
+}
