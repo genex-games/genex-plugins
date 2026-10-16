@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T15:26:56.447Z",
+  "updatedAt": "2026-10-13T12:57:03.564Z",
   "plugins": [
     {
       "id": "genex",
@@ -51,6 +51,73 @@
       },
       "subdir": "src/plugins/blender",
       "minStudioVersion": "0.1.0"
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "publisher": "Arek Nurzyński",
+      "description": "Make voices, sound effects and music with your own ElevenLabs API key and plan, not Genex credits.",
+      "category": "assets",
+      "tier": "community",
+      "repo": "arklanq/genex-elevenlabs",
+      "sha": "f03f081b0869b1c9df6a6ceaed89876a036c6efb",
+      "version": "0.1.3",
+      "capabilities": [
+        "credentials",
+        "network",
+        "jobs",
+        "project.write"
+      ],
+      "artifact": {
+        "url": "https://plugins.genex.games/releases/elevenlabs/0.1.3/6b3a63beed3cac4dc0b71ff0a44c9aec8f945524e4c4fa64cfbdf83614093674.json",
+        "sha256": "6b3a63beed3cac4dc0b71ff0a44c9aec8f945524e4c4fa64cfbdf83614093674"
+      },
+      "subdir": "plugin",
+      "docsUrl": "https://github.com/arklanq/genex-elevenlabs"
+    },
+    {
+      "id": "tripo",
+      "name": "Tripo",
+      "publisher": "Arek Nurzyński",
+      "description": "Make 3D models with your own Tripo API key and Tripo credits, not Genex credits.",
+      "category": "assets",
+      "tier": "community",
+      "repo": "arklanq/genex-tripo",
+      "sha": "852df9c7e9d1ce63cd275a8684b3b5d5fd46fc54",
+      "version": "0.1.3",
+      "capabilities": [
+        "credentials",
+        "network",
+        "jobs",
+        "project.write"
+      ],
+      "artifact": {
+        "url": "https://plugins.genex.games/releases/tripo/0.1.3/5bf743c400da8b1f1c1356cc2880c0412f8f99b91bc366ea22988b69ca30afbe.json",
+        "sha256": "5bf743c400da8b1f1c1356cc2880c0412f8f99b91bc366ea22988b69ca30afbe"
+      },
+      "subdir": "plugin",
+      "docsUrl": "https://github.com/arklanq/genex-tripo"
+    },
+    {
+      "id": "asset-search",
+      "name": "3D Asset Search",
+      "publisher": "Arek Nurzyński",
+      "description": "Search 17 sites for 3D models, materials, textures and HDRIs at once and bring free ones into the game, through 3D Asset Server.",
+      "category": "assets",
+      "tier": "community",
+      "repo": "arklanq/genex-asset-search",
+      "sha": "58d487c3acb2dff9aa1bbf9444de244133c0630c",
+      "version": "0.1.1",
+      "capabilities": [
+        "network",
+        "project.write"
+      ],
+      "artifact": {
+        "url": "https://plugins.genex.games/releases/asset-search/0.1.1/43681250cb6ba8c5bf65a0c745bf3198a49444607984e7af2fd067fd4f542b96.json",
+        "sha256": "43681250cb6ba8c5bf65a0c745bf3198a49444607984e7af2fd067fd4f542b96"
+      },
+      "subdir": "plugin",
+      "docsUrl": "https://github.com/arklanq/genex-asset-search"
     }
   ]
 }

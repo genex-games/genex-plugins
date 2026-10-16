@@ -1,0 +1,21 @@
+{
+  "id": "asset-search",
+  "name": "3D Asset Search",
+  "publisher": "Arek Nurzyński",
+  "description": "Search 17 sites for 3D models, materials, textures and HDRIs at once and bring free ones into the game, through 3D Asset Server.",
+  "category": "assets",
+  "tier": "community",
+  "repo": "arklanq/genex-asset-search",
+  "sha": "58d487c3acb2dff9aa1bbf9444de244133c0630c",
+  "version": "0.1.1",
+  "capabilities": [
+    "network",
+    "project.write"
+  ],
+  "artifact": {
+    "url": "https://plugins.genex.games/releases/asset-search/0.1.1/43681250cb6ba8c5bf65a0c745bf3198a49444607984e7af2fd067fd4f542b96.json",
+    "sha256": "43681250cb6ba8c5bf65a0c745bf3198a49444607984e7af2fd067fd4f542b96"
+  },
+  "subdir": "plugin",
+  "docsUrl": "https://github.com/arklanq/genex-asset-search"
+}
