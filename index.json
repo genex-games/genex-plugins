@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T15:26:56.447Z",
+  "updatedAt": "2026-10-17T16:13:20.182Z",
   "plugins": [
     {
       "id": "genex",
@@ -51,6 +51,31 @@
       },
       "subdir": "src/plugins/blender",
       "minStudioVersion": "0.1.0"
+    },
+    {
+      "id": "theastraydev-local-models",
+      "name": "Local Models",
+      "publisher": "TheAstrayDev",
+      "description": "Experimental local images/audio: Windows x64 Vulkan and Apple Silicon Metal. Hunyuan3D: Windows x64 NVIDIA CUDA, 12 GB VRAM / 32 GB RAM tested, separate setup; shape and paint jobs capped at five minutes each. Slower devices may time out.",
+      "category": "assets",
+      "tier": "community",
+      "repo": "TheAstrayDev/genex-local-models",
+      "sha": "4f5bcdb923553b4b6f518d8e85ec9a80cb2fffa8",
+      "version": "0.1.13",
+      "capabilities": [
+        "native-runtime",
+        "project.read",
+        "project.write",
+        "jobs",
+        "network",
+        "observe"
+      ],
+      "artifact": {
+        "url": "https://plugins.genex.games/releases/theastraydev-local-models/0.1.13/4ffb353110d657abf794bea7108b9c841973941eee539cf0d44cceb256be2ce2.json",
+        "sha256": "4ffb353110d657abf794bea7108b9c841973941eee539cf0d44cceb256be2ce2"
+      },
+      "subdir": "package",
+      "docsUrl": "https://github.com/TheAstrayDev/genex-local-models"
     }
   ]
 }
