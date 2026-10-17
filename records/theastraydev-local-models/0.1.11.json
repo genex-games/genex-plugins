@@ -1,0 +1,25 @@
+{
+  "id": "theastraydev-local-models",
+  "name": "Local Models",
+  "publisher": "TheAstrayDev",
+  "description": "Experimental Windows/NVIDIA local image, audio and 3D generation. Requires an unreleased native-job host extension; not compatible with stock Genex 0.1.7. One GPU worker at a time.",
+  "category": "assets",
+  "tier": "community",
+  "repo": "TheAstrayDev/genex-local-models",
+  "sha": "d1c7582f0a4648faf8d8baa8c5c06332c198021c",
+  "version": "0.1.11",
+  "capabilities": [
+    "native-runtime",
+    "project.read",
+    "project.write",
+    "jobs",
+    "network",
+    "observe"
+  ],
+  "artifact": {
+    "url": "https://plugins.genex.games/releases/theastraydev-local-models/0.1.11/b10ebb6ac75e386423b231c2c74a415316652fd7f7698491ceefddb1bcd20d92.json",
+    "sha256": "b10ebb6ac75e386423b231c2c74a415316652fd7f7698491ceefddb1bcd20d92"
+  },
+  "subdir": "package",
+  "docsUrl": "https://github.com/TheAstrayDev/genex-local-models"
+}
