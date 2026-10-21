@@ -1,0 +1,28 @@
+{
+  "id": "arklanq-tripo",
+  "name": "Tripo",
+  "publisher": "Arek Nurzyński",
+  "description": "Make 3D models with your own Tripo API key and Tripo credits, not Genex credits.",
+  "category": "assets",
+  "tier": "community",
+  "repo": "arklanq/genex-tripo",
+  "sha": "bd51d5e5acde0c7953ac769572eddb0b7a75cc03",
+  "version": "0.2.0",
+  "capabilities": [
+    "credentials",
+    "network",
+    "jobs",
+    "project.write"
+  ],
+  "artifact": {
+    "url": "https://plugins.genex.games/releases/arklanq-tripo/0.2.0/2bfc02ed6b1fb9145fbb44d69ca9ee63b7b19b1b7e158bb00da6511029c39146.json",
+    "sha256": "2bfc02ed6b1fb9145fbb44d69ca9ee63b7b19b1b7e158bb00da6511029c39146"
+  },
+  "subdir": "plugin",
+  "docsUrl": "https://github.com/arklanq/genex-tripo",
+  "setup": [
+    "Create an API key at developers.tripo3d.ai under API Keys.",
+    "In Genex, open the plugin's Configuration, paste the key and press Connect.",
+    "Top up your Tripo wallet: every model is paid from it, not from Genex credits."
+  ]
+}
