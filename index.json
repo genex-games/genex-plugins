@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T15:26:56.447Z",
+  "updatedAt": "2026-10-22T18:44:32.509Z",
   "plugins": [
     {
       "id": "genex",
@@ -51,6 +51,86 @@
       },
       "subdir": "src/plugins/blender",
       "minStudioVersion": "0.1.0"
+    },
+    {
+      "id": "arklanq-elevenlabs",
+      "name": "ElevenLabs",
+      "publisher": "Arek Nurzyński",
+      "description": "Make voices, sound effects and music with your own ElevenLabs API key and plan, not Genex credits.",
+      "category": "assets",
+      "tier": "community",
+      "repo": "arklanq/genex-elevenlabs",
+      "sha": "43ba4944cfeb06432009d3aee7a85df4b056c128",
+      "version": "0.2.0",
+      "capabilities": [
+        "credentials",
+        "network",
+        "jobs",
+        "project.write"
+      ],
+      "artifact": {
+        "url": "https://plugins.genex.games/releases/arklanq-elevenlabs/0.2.0/7fe21102b74455571a108a71d1942064f5c19a2d3ea8e9b1cc474036548dc30d.json",
+        "sha256": "7fe21102b74455571a108a71d1942064f5c19a2d3ea8e9b1cc474036548dc30d"
+      },
+      "subdir": "plugin",
+      "docsUrl": "https://github.com/arklanq/genex-elevenlabs",
+      "setup": [
+        "Create an API key at elevenlabs.io under Developers, then API Keys.",
+        "In Genex, open the plugin's Configuration, paste the key and press Connect.",
+        "Audio is paid from your ElevenLabs plan, not from Genex credits. Music needs a paid plan."
+      ]
+    },
+    {
+      "id": "arklanq-tripo",
+      "name": "Tripo",
+      "publisher": "Arek Nurzyński",
+      "description": "Make 3D models with your own Tripo API key and Tripo credits, not Genex credits.",
+      "category": "assets",
+      "tier": "community",
+      "repo": "arklanq/genex-tripo",
+      "sha": "bd51d5e5acde0c7953ac769572eddb0b7a75cc03",
+      "version": "0.2.0",
+      "capabilities": [
+        "credentials",
+        "network",
+        "jobs",
+        "project.write"
+      ],
+      "artifact": {
+        "url": "https://plugins.genex.games/releases/arklanq-tripo/0.2.0/2bfc02ed6b1fb9145fbb44d69ca9ee63b7b19b1b7e158bb00da6511029c39146.json",
+        "sha256": "2bfc02ed6b1fb9145fbb44d69ca9ee63b7b19b1b7e158bb00da6511029c39146"
+      },
+      "subdir": "plugin",
+      "docsUrl": "https://github.com/arklanq/genex-tripo",
+      "setup": [
+        "Create an API key at developers.tripo3d.ai under API Keys.",
+        "In Genex, open the plugin's Configuration, paste the key and press Connect.",
+        "Top up your Tripo wallet: every model is paid from it, not from Genex credits."
+      ]
+    },
+    {
+      "id": "arklanq-asset-search",
+      "name": "3D Asset Search",
+      "publisher": "Arek Nurzyński",
+      "description": "Search many sites for free 3D models, materials, textures and HDRIs at once and bring them into the game, through 3D Asset Server.",
+      "category": "assets",
+      "tier": "community",
+      "repo": "arklanq/genex-asset-search",
+      "sha": "6930a2da29de740b945d0a90bd89a95130a695c2",
+      "version": "0.3.0",
+      "capabilities": [
+        "network",
+        "project.write"
+      ],
+      "artifact": {
+        "url": "https://plugins.genex.games/releases/arklanq-asset-search/0.3.0/f4e1756b6a147a5cfc264383c6f888e01449e34b0a38b418a6f65407f43f2480.json",
+        "sha256": "f4e1756b6a147a5cfc264383c6f888e01449e34b0a38b418a6f65407f43f2480"
+      },
+      "subdir": "plugin",
+      "docsUrl": "https://github.com/arklanq/genex-asset-search",
+      "setup": [
+        "Open the plugin's Configuration to choose the sources it searches, and whether sources that only link to their pages are acceptable."
+      ]
     }
   ]
 }
