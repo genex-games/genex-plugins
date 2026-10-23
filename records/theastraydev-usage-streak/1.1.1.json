@@ -1,0 +1,21 @@
+{
+  "id": "theastraydev-usage-streak",
+  "name": "Usage-Streak",
+  "publisher": "TheAstrayDev",
+  "description": "Local reported token activity, streaks and saved captures. Reads local Genex history, saved run captures and Genex Tools covers. Compatible with Genex 0.1.12.",
+  "category": "analytics",
+  "tier": "community",
+  "repo": "TheAstrayDev/genex-usage-streak",
+  "sha": "d4521495f357999e634a0b4f535ae6901017cd89",
+  "version": "1.1.1",
+  "capabilities": [
+    "project.read"
+  ],
+  "artifact": {
+    "url": "https://plugins.genex.games/releases/theastraydev-usage-streak/1.1.1/3207d968b1ba24eb4c9e5e3af9beb53323e7e481b4e362ef8192af5cf8a3e2c7.json",
+    "sha256": "3207d968b1ba24eb4c9e5e3af9beb53323e7e481b4e362ef8192af5cf8a3e2c7"
+  },
+  "subdir": "plugin",
+  "docsUrl": "https://github.com/TheAstrayDev/genex-usage-streak/blob/d4521495f357999e634a0b4f535ae6901017cd89/README.md",
+  "minStudioVersion": "0.1.12"
+}
